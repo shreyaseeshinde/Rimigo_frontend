@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rimigo - Your Dream Vacation, Perfectly Planned in Minutes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        nav.scrolled .logo {
+            color: #1e40af;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav.scrolled .nav-links a {
+            color: #374151;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav.scrolled .mobile-menu-btn {
+            color: #1e40af;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 0.75rem;
+            color: #374151;
+            text-decoration: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3a8a, #6b21a8, #db2777);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&h=1080&fit=crop') center/cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 1200px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #e5e7eb;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            background: white;
+            border-radius: 9999px;
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-input {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+        }
+
+        .search-input input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .search-input i {
+            color: #9ca3af;
+        }
+
+        .features-list {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: white;
+            flex-wrap: wrap;
+        }
+
+        .features-list div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            padding: 3rem 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #bfdbfe;
+        }
+
+        /* Section */
+        section {
+            padding: 5rem 1rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+
+        .section-header p {
+            color: #6b7280;
+            font-size: 1.125rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: #111827;
+        }
+
+        .card p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* Persona Cards */
+        .persona-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .persona-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .persona-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .persona-1 { background: linear-gradient(to right, #f97316, #dc2626); }
+        .persona-2 { background: linear-gradient(to right, #ec4899, #a855f7); }
+        .persona-3 { background: linear-gradient(to right, #eab308, #f97316); }
+        .persona-4 { background: linear-gradient(to right, #3b82f6, #06b6d4); }
+
+        /* How It Works */
+        .step-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #f3f4f6;
+            margin-bottom: 1rem;
+        }
+
+        /* Destination Cards */
+        .destination-card {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 350px;
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+            display: block;
+        }
+
+        .destination-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .destination-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .destination-card h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .destination-type {
+            color: #d1d5db;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .destination-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            color: #fbbf24;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #374151;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-author img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .author-location {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            color: #bfdbfe;
+            margin-bottom: 2rem;
+        }
+
+        .btn-white {
+            background: white;
+            color: #2563eb;
+            padding: 1rem 3rem;
+            border-radius: 9999px;
+            border: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-white:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #111827;
+            color: #9ca3af;
+            padding: 3rem 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .footer-logo i {
+            color: #3b82f6;
+        }
+
+        footer h4 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        /* Background Colors */
+        .bg-gray {
+            background: #f9fafb;
+        }
+
+        .bg-blue-gradient {
+            background: linear-gradient(135deg, #dbeafe 0%, #e9d5ff 100%);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .section-header h2 {
+                font-size: 1.75rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .features-list {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-sparkles"></i>
+                <span>Rimigo</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#destinations">Destinations</a>
+                <a href="#how-it-works">How it Works</a>
+                <a href="#testimonials">Reviews</a>
+                <button class="btn-primary">Start Planning</button>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#destinations">Destinations</a>
+            <a href="#how-it-works">How it Works</a>
+            <a href="#testimonials">Reviews</a>
+            <button class="btn-primary" style="width: 100%; margin-top: 1rem;">Start Planning</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>
+                Your Dream Vacation,<br>
+                <span class="gradient-text">Perfectly Planned in Minutes</span>
+            </h1>
+            <p>
+                Stop endless planning. Let AI craft your perfect itinerary with flights, stays, and experiences—all in one place.
+            </p>
+            
+            <div class="search-bar">
+                <div class="search-input">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" placeholder="Where do you want to go?">
+                </div>
+                <div class="search-input">
+                    <i class="fas fa-calendar"></i>
+                    <input type="text" placeholder="When?">
+                </div>
+                <button class="btn-primary">
+                    <i class="fas fa-sparkles"></i>
+                    Plan My Trip
+                </button>
+            </div>
+
+            <div class="features-list">
+                <div>
+                    <i class="fas fa-check-circle" style="color: #4ade80;"></i>
+                    <span>Free Itinerary</span>
+                </div>
+                <div>
+                    <i class="fas fa-check-circle" style="color: #4ade80;"></i>
+                    <span>No Hidden Fees</span>
+                </div>
+                <div>
+                    <i class="fas fa-check-circle" style="color: #4ade80;"></i>
+                    <span>24/7 Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-number">1200+</div>
+                    <div class="stat-label">Trips Planned</div>
+                </div>
+                <div>
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Destinations</div>
+                </div>
+                <div>
+                    <div class="stat-number">4.9★</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+                <div>
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Happy Travelers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Personas -->
+    <section class="bg-gray">
+        <div class="container">
+            <div class="section-header">
+                <h2>Which Traveler Are You?</h2>
+                <p>Tell us your travel style, and we'll craft the perfect experience just for you</p>
+            </div>
+            <div class="grid-4">
+                <div class="persona-card">
+                    <div class="persona-icon persona-1">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Adventure Seeker</h3>
+                </div>
+                <div class="persona-card">
+                    <div class="persona-icon persona-2">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Romantic Escape</h3>
+                </div>
+                <div class="persona-card">
+                    <div class="persona-icon persona-3">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Food Explorer</h3>
+                </div>
+                <div class="persona-card">
+                    <div class="persona-icon persona-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Family Fun</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Rimigo Works</h2>
+                <p>From dream to departure in three simple steps</p>
+            </div>
+            <div class="grid-3">
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="step-number">01</div>
+                    <h3>Share Your Dream</h3>
+                    <p>Tell us where you want to go, when, and what you love to do</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                    <div class="step-number">02</div>
+                    <h3>AI Creates Magic</h3>
+                    <p>Our AI crafts a perfect itinerary with flights, stays, and experiences</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <div class="step-number">03</div>
+                    <h3>Book & Travel</h3>
+                    <p>Review, customize, and book everything in one click. Then just enjoy!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="bg-blue-gradient">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Rimigo?</h2>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                    <h3>AI-Powered Planning</h3>
+                    <p>Our intelligent system creates personalized itineraries based on your preferences in minutes</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>All-in-One Platform</h3>
+                    <p>Flights, hotels, activities, and visa processing - everything in one seamless experience</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Real-time assistance throughout your journey, from planning to returning home</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations -->
+    <section id="destinations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trending Destinations</h2>
+                <p>Handpicked by our travel experts</p>
+            </div>
+            <div class="grid-4">
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&h=600&fit=crop" alt="Bali">
+                    <div class="destination-overlay">
+                        <div class="rating">
+                            <i class="fas fa-star" style="color: #fbbf24;"></i>
+                            <span>4.9</span>
+                        </div>
+                        <h3>Bali, Indonesia</h3>
+                        <div class="destination-type">Beach & Culture</div>
+                        <div class="destination-footer">
+                            <span class="price">₹45,000</span>
+                            <span>6 Days</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&h=600&fit=crop" alt="Tokyo">
+                    <div class="destination-overlay">
+                        <div class="rating">
+                            <i class="fas fa-star" style="color: #fbbf24;"></i>
+                            <span>4.8</span>
+                        </div>
+                        <h3>Tokyo, Japan</h3>
+                        <div class="destination-type">Culture & Food</div>
+                        <div class="destination-footer">
+                            <span class="price">₹85,000</span>
+                            <span>7 Days</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800&h=600&fit=crop" alt="Santorini">
+                    <div class="destination-overlay">
+                        <div class="rating">
+                            <i class="fas fa-star" style="color: #fbbf24;"></i>
+                            <span>4.9</span>
+                        </div>
+                        <h3>Santorini, Greece</h3>
+                        <div class="destination-type">Romantic Getaway</div>
+                        <div class="destination-footer">
+                            <span class="price">₹95,000</span>
+                            <span>5 Days</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop" alt="Dubai">
+                    <div class="destination-overlay">
+                        <div class="rating">
+                            <i class="fas fa-star" style="color: #fbbf24;"></i>
+                            <span>4.7</span>
+                        </div>
+                        <h3>Dubai, UAE</h3>
+                        <div class="destination-type">Luxury & Shopping</div>
+                        <div class="destination-footer">
+                            <span class="price">₹65,000</span>
+                            <span>5 Days</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="bg-blue-gradient">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Travelers Say</h2>
+                <p>Join thousands of happy travelers who've trusted Rimigo with their dream vacations</p>
+            </div>
+            <div class="grid-3">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Rimigo planned our entire Bali trip in 10 minutes! The itinerary was perfect, and we saved so much time and money."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Priya">
+                        <div>
+                            <div class="author-name">Priya Sharma</div>
+                            <div class="author-location">Mumbai</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Best travel planning experience ever. Everything from visa to hotel bookings was handled seamlessly."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Rajesh">
+                        <div>
+                            <div class="author-name">Rajesh Kumar</div>
+                            <div class="author-location">Delhi</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The AI recommendations were spot-on! It felt like having a personal travel agent who knows exactly what I like."</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="Ananya">
+                        <div>
+                            <div class="author-name">Ananya Reddy</div>
+                            <div class="author-location">Bangalore</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready for Your Next Adventure?</h2>
+            <p>Let's turn your travel dreams into reality. Start planning in just 2 minutes.</p>
+            <button class="btn-white">
+                Start Planning for Free
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <p style="margin-top: 1.5rem; font-size: 0.875rem;">No credit card required • Free itinerary generation</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-sparkles"></i>
+                        <span>Rimigo</span>
+                    </div>
+                    <p style="font-size: 0.875rem;">Making vacation planning effortless with AI-powered personalization.</p>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cancellation Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Rimigo. All rights reserved. Made with ❤️ for travelers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
